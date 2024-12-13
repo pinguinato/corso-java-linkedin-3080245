@@ -47,13 +47,35 @@ public class DataSource {
 
   }
 
+  public static Account getAccount(int accountId) {
+    String sql = "SELECT * FROM accounts WHERE id = ?";
+    Account account = null;
+
+    try (Connection connection = connect();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+      preparedStatement.setInt(1, accountId);
+      try (ResultSet resultSet = preparedStatement.executeQuery()) {
+
+        account = new Account(
+            resultSet.getInt("id"),
+            resultSet.getString("type"),
+            resultSet.getDouble("balance"));
+      }
+    } catch (SQLException sqlException) {
+      sqlException.printStackTrace();
+    }
+
+    return account;
+  }
+
   public static void main(String[] args) {
     // test di connessione
     connect();
-
     // test di ricerca Customer
     Customer customer = getCustomer("amcerlaineqm@admin.ch");
     System.out.println(customer.getName());
+    // test dell'account
+    Account account = getAccount(14067);
+    System.out.println("Account: " + account.getId() + "," + account.getType() + "," + account.getBalance());
   }
-
 }
