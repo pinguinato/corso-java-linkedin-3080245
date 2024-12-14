@@ -55,6 +55,7 @@ public class Account {
       throw new AmountException("You do not have sufficient funds for this withdrawal.");
     } else {
       double newBalance = balance - amount;
+      setBalance(newBalance);
       DataSource.updateAccountBalance(id, newBalance);
     }
   }
