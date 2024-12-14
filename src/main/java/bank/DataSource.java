@@ -68,6 +68,21 @@ public class DataSource {
     return account;
   }
 
+  public static void updateAccountBalance(int accountId, double balance) {
+    String sql = "UPDATE accounts SET balance = ? WHERE id = ?";
+
+    try (Connection connection = connect();
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+
+      statement.setDouble(1, balance);
+      statement.setInt(2, accountId);
+      statement.executeUpdate();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
   public static void main(String[] args) {
     // test di connessione
     connect();
