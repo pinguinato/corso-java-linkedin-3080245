@@ -35,4 +35,12 @@ public class Account {
   public void setBalance(double balance) {
     this.balance = balance;
   }
+
+  public void deposit(double amount) {
+    // todo: missing implementation
+  }
+
+  public void withdraw(double amount) {
+    // todo: missing implementation
+  }
 }
